@@ -35,5 +35,16 @@ public class HandWorker {
             }
         }
         return selectedCard;
-    }    
+    }  
+    
+    public Card getMinCard(ArrayList<Card> deck){
+        CardType ct=new CardType();
+        Card selectedCard=deck.get(0);
+        for (int i=0;i<deck.size();i++){
+            if ((!deck.get(i).getCardType().equals(ct.Kozir)&&deck.get(i).getCardSize()<selectedCard.getCardSize())||
+                    (selectedCard.getCardType().equals(ct.Kozir)&&deck.get(i).getCardSize()<selectedCard.getCardSize()))
+                    selectedCard=deck.get(i);
+        }
+        return selectedCard;
+    }
 }

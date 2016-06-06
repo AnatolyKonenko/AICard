@@ -50,7 +50,7 @@ public class GameProcess {
         u1c=usr1.step();
         if (u1c==null) return;
         else {
-            if (CheckCorrect()){
+            if (CheckCorrectAtt(u1c)){
                 table.atacker.add(u1c);
                 AIStep();
                 U1Step();
@@ -72,5 +72,16 @@ public class GameProcess {
     
     private boolean CheckCorrect(){
         return false;
+    }
+    
+    private boolean CheckCorrectDef(Card crd){
+        CardType ct=new CardType();
+        Card unb=table.returnUnbeatenCards().get(0);
+        return (unb.getCardSize()<crd.getCardSize()&&unb.getCardType().equals(crd.getCardType()))||
+                (!unb.getCardType().equals(ct.Kozir)&&crd.getCardType().equals(ct.Kozir));
+    }
+    
+    private boolean CheckCorrectAtt(Card crd){
+        return table.returnCardNumbers().contains(crd.getCardSize());
     }
 }

@@ -52,4 +52,6 @@ public class Deck {
    public int getSizeOfDeck(){
        return deck.size();
    }
+   
+   
 }

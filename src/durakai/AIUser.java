@@ -11,6 +11,7 @@ package durakai;
  */
 public class AIUser extends User {
     public int makeBetterChoice(){
+        
         return 0;
     }
     

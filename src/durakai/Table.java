@@ -6,6 +6,8 @@
 package durakai;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -39,6 +41,20 @@ public class Table {
         lst.addAll(defender);
         clearTable();
         return lst;
+    }
+    
+    public ArrayList<Card> returnUnbeatenCards(){
+        return (ArrayList<Card>) atacker.subList(defender.size(), atacker.size());
+    }
+    
+    public Set<Integer> returnCardNumbers(){
+        Set<Integer> toReturn = null;
+        for (int i=0;i<atacker.size();i++)
+            toReturn.add(atacker.get(i).getCardSize());
+        for (int i=0;i<defender.size();i++){
+            toReturn.add(defender.get(i).getCardSize());
+        }
+        return toReturn;
     }
     
 }

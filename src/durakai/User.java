@@ -14,13 +14,15 @@ import java.util.Scanner;
  */
 public class User {
     private String name;
-    private boolean isAI;
-    private ArrayList<Card> cardInHand;
+    protected boolean isAI;
+    protected boolean isAtacker;
+    protected ArrayList<Card> cardInHand;
 
 
     User(){
         name="Nm";
         isAI=true;
+        isAtacker=true;
         cardInHand=new ArrayList<>();
     }
 
@@ -55,7 +57,10 @@ public class User {
     public Card step(){
         Scanner read=new Scanner(System.in);
         String result=read.nextLine();
-        if ("end".equals(result)) return null;
+        if ("end".equals(result)) {
+            isAtacker=false;
+            return null;
+        }
         return makeStep(Integer.parseInt(result));
     }
     

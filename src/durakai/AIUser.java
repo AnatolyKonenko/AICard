@@ -11,11 +11,16 @@ package durakai;
  */
 public class AIUser extends User {
     public int makeBetterChoice(){
-        
         return 0;
     }
     
     public Card makeStep(){
+        HandWorker hw=new HandWorker();
+        Card cd;
+        if (isAtacker) {
+            cd=hw.getMinCard(cardInHand);
+            return cd;
+        } else
         return null;
     }
 }

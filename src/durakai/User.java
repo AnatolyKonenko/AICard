@@ -48,8 +48,9 @@ public class User {
         isAtacker=!isAtacker;
     }
     
-    private Card makeStep(int cardNumer){
-        Card tmp=cardInHand.get(cardNumer);
+    private Card makeStep(int cardNumber){
+        if (cardNumber>=cardInHand.size()) return null;
+        Card tmp=cardInHand.get(cardNumber);
         cardInHand.remove(tmp);
         return tmp;
     }

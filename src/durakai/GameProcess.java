@@ -23,13 +23,20 @@ public class GameProcess {
         table = new Table();
         usr1 = new User();
         ai1 = new AIUser();
-        deck = new Deck();
+        deck = new Deck(true);
         userstep = true;
         for (int i = 0; i < 6; i++) {
             usr1.getCard(deck.getCard());
             ai1.getCard(deck.getCard());
         }
         runGame();
+    }
+    
+    public void startGameWith() {
+        table =new Table();
+        usr1=new User();
+        ai1=new AIUser();
+        
     }
 
     private void runGame() {
@@ -49,6 +56,7 @@ public class GameProcess {
                             ai1.getCard(table.returnAllCard());
                             table.clearTable();
                             userstep = false;
+                            System.out.println("AI takes cards");
                             break;
                         }
                     }
@@ -58,13 +66,18 @@ public class GameProcess {
                     System.out.println("You defend");
                     u1 = AIStep();
                     printTable();
-                    u2 = U1Step();
+                    if (u1) u2 = U1Step();
+                    else {
+                        u2=true;
+                        System.out.println("Card beaten");
+                    }
                     printTable();
                     if (!u2) {
                         if (!table.returnUnbeatenCards().isEmpty()) {
                             usr1.getCard(table.returnAllCard());
                             table.clearTable();
                             userstep = true;
+                            System.out.println("You takes cards");
                             break;
                         }
                     }
@@ -86,6 +99,8 @@ public class GameProcess {
             }
             userstep = !userstep;
         }
+        if (ai1.getCardInHandInfo().isEmpty()) System.out.println("AI wins this game");
+        else System.out.println("User wins the game");
     }
 
     private boolean U1Step() {
@@ -99,6 +114,9 @@ public class GameProcess {
             while (!CheckCorrectAtt(u1c)) {
                 System.out.println("incorrect card!");
                 u1c = usr1.step(table);
+                if (u1c == null) {
+                    return false;
+                }
             }
             table.atacker.addAll(u1c);
 
@@ -107,9 +125,12 @@ public class GameProcess {
             if (u1c == null) {
                 return false;
             }
-            while (!CheckCorrectAtt(u1c)) {
+            while (!CheckCorrectDef(u1c)) {
                 System.out.println("incorrect card!");
                 u1c = usr1.step(table);
+                if (u1c == null) {
+                    return false;
+                }
             }
             table.defender.addAll(u1c);
 
@@ -150,14 +171,14 @@ public class GameProcess {
         if (userstep) {
             ai1.setAtacker(!userstep);
             aiS = ai1.makeStep(table);
-            if (aiS == null) {
+            if (aiS == null|| aiS.size()==0) {
                 return false;
             }
             table.defender.addAll(aiS);
         } else {
             ai1.setAtacker(!userstep);
             aiS = ai1.makeStep(table);
-            if (aiS == null) {
+            if (aiS.size() == 0||aiS==null) {
                 return false;
             }
             table.atacker.addAll(aiS);

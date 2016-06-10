@@ -36,6 +36,7 @@ public class AIUser extends User {
             }
         } else { //def
             toReturn = hw.getCardsToBeat(table.returnUnbeatenCards(), cardInHand);
+            cardInHand.removeAll(toReturn);
             return toReturn;
         }
 

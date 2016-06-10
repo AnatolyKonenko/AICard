@@ -16,7 +16,6 @@ public class DurakAI {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Deck tmp=new Deck();
         Card crd;
         int k=1;
         GameProcess gp=new GameProcess();

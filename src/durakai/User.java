@@ -68,8 +68,10 @@ public class User {
             return null;
         }
         String[] sp=result.split(" ");
+        Card cd;
         for (String sp1 : sp) {
-            toReturn.add(makeStep(Integer.parseInt(sp1)));
+            cd=makeStep(Integer.parseInt(sp1));
+            if (cd!=null) toReturn.add(cd);
         }
         return toReturn;
     }

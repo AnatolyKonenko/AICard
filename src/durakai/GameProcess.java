@@ -66,7 +66,7 @@ public class GameProcess {
                     System.out.println("You defend");
                     u1 = AIStep();
                     printTable();
-                    if (u1) u2 = U1Step();
+                    if (!table.returnUnbeatenCards().isEmpty()) u2 = U1Step();
                     else {
                         u2=true;
                         System.out.println("Card beaten");
@@ -108,13 +108,17 @@ public class GameProcess {
         ArrayList<Card> u1c;
         if (userstep) {
             u1c = usr1.step(table);
-            if (u1c == null) {
+            if ((u1c == null||u1c.isEmpty())&&!table.tableIsEmpty()) {
                 return false;
+            }
+            else while (u1c==null||u1c.isEmpty()) {
+                u1c=usr1.step(table);
             }
             while (!CheckCorrectAtt(u1c)) {
                 System.out.println("incorrect card!");
                 u1c = usr1.step(table);
-                if (u1c == null) {
+                usr1.getCard(u1c);
+                if (u1c == null||u1c.isEmpty()) {
                     return false;
                 }
             }
@@ -127,6 +131,7 @@ public class GameProcess {
             }
             while (!CheckCorrectDef(u1c)) {
                 System.out.println("incorrect card!");
+                usr1.getCard(u1c);
                 u1c = usr1.step(table);
                 if (u1c == null) {
                     return false;
@@ -167,18 +172,18 @@ public class GameProcess {
     }
 
     private boolean AIStep() {
-        ArrayList<Card> aiS = new ArrayList<Card>();
+        ArrayList<Card> aiS = new ArrayList<>();
         if (userstep) {
             ai1.setAtacker(!userstep);
             aiS = ai1.makeStep(table);
-            if (aiS == null|| aiS.size()==0) {
+            if (aiS == null|| aiS.isEmpty()) {
                 return false;
             }
             table.defender.addAll(aiS);
         } else {
             ai1.setAtacker(!userstep);
             aiS = ai1.makeStep(table);
-            if (aiS.size() == 0||aiS==null) {
+            if (aiS.isEmpty()||aiS==null) {
                 return false;
             }
             table.atacker.addAll(aiS);

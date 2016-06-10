@@ -19,12 +19,15 @@ public class DurakAI {
         Deck tmp=new Deck();
         Card crd;
         int k=1;
-        while (tmp.getSizeOfDeck()>0) {
+        GameProcess gp=new GameProcess();
+        gp.startGame();
+    /*    while (tmp.getSizeOfDeck()>0) {
             crd=tmp.getCard();
             System.out.println(k+"){"+crd.getCardSize()+";"+crd.getCardType()+"}");
             k++;
             
         }
+*/
     }
     
 }

@@ -39,12 +39,11 @@ public class Table {
         ArrayList<Card> lst= new ArrayList<>();
         lst.addAll(atacker);
         lst.addAll(defender);
-        clearTable();
         return lst;
     }
     
     public ArrayList<Card> returnUnbeatenCards(){
-        return (ArrayList<Card>) atacker.subList(defender.size(), atacker.size());
+        return  new ArrayList<Card>(atacker.subList(defender.size(), atacker.size()));
     }
     
     public Set<Integer> returnCardNumbers(){
@@ -55,6 +54,10 @@ public class Table {
             toReturn.add(defender.get(i).getCardSize());
         }
         return toReturn;
+    }
+    
+    public boolean tableIsEmpty(){
+        return (0==(atacker.size()+defender.size()));
     }
     
 }

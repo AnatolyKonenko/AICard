@@ -55,10 +55,18 @@ public class HandWorker {
     public ArrayList<Card> getCardsToBeat(ArrayList<Card> cardToBeat, ArrayList<Card> cardInHand){
         ArrayList<Card> toReturn=new ArrayList<>();
         for (int i=0;i<cardToBeat.size();i++){
-            toReturn.add(getMinGreaterCard(cardInHand, toReturn.get(i)));
+            toReturn.add(getMinGreaterCard(cardInHand, cardToBeat.get(i)));
         }
         if (toReturn.contains(null)) return null;
         else return toReturn;
+    }
+    
+    public ArrayList<Card> tossCard(Card cd,ArrayList<Card> cardInHand){
+        ArrayList<Card> toReturn= new ArrayList<>();
+        for (int i=0;i<cardInHand.size();i++){
+            if (cd.getCardSize()==cardInHand.get(i).getCardSize()) toReturn.add(cardInHand.get(i));
+        }
+        return toReturn;
     }
     
     public ArrayList<Card> tossCard(ArrayList<Card> cardOnTable, ArrayList<Card> cardInHand){

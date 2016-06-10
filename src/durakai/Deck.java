@@ -44,7 +44,7 @@ public class Deck {
    }
    
    public ArrayList<Card> getCard(int countOfCards){
-       ArrayList<Card> toReturn=(ArrayList<Card>) deck.subList(0, countOfCards);
+       ArrayList<Card> toReturn= new ArrayList<Card>(deck.subList(0, countOfCards));
        deck.removeAll(toReturn);
        return toReturn;
    }

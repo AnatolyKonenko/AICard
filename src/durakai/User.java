@@ -44,6 +44,10 @@ public class User {
         return cardInHand.size();
     }
     
+    public void switchRole(){
+        isAtacker=!isAtacker;
+    }
+    
     private Card makeStep(int cardNumer){
         Card tmp=cardInHand.get(cardNumer);
         cardInHand.remove(tmp);
@@ -54,17 +58,24 @@ public class User {
         return cardInHand;
     }
     
-    public Card step(){
+    public ArrayList<Card> step(Table table){
+        ArrayList<Card> toReturn=new ArrayList<>();
         Scanner read=new Scanner(System.in);
         String result=read.nextLine();
         if ("end".equals(result)) {
-            isAtacker=false;
+            isAtacker=!isAtacker;
             return null;
         }
-        return makeStep(Integer.parseInt(result));
+        String[] sp=result.split(" ");
+        for (String sp1 : sp) {
+            toReturn.add(makeStep(Integer.parseInt(sp1)));
+        }
+        return toReturn;
     }
     
-
+    public void setAtacker(boolean atacker){
+        this.isAtacker=atacker;
+    }
     
     
 }

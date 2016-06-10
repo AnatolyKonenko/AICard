@@ -32,6 +32,7 @@ public class HandWorker {
         CardType ct=new CardType();
         selectedCard= new Card(15,"");
         for (int i=0;i<deck.size();i++){
+            if (selectedCard.getCardType().equals(ct.Kozir))
             if ((deck.get(i).getCardSize()>=card.getCardSize()&&selectedCard.getCardSize()>deck.get(i).getCardSize())&&(
                     deck.get(i).getCardType().equals(ct.Kozir)||deck.get(i).getCardType().equals(card.getCardType()))) {
                 selectedCard=deck.get(i);

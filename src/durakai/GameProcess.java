@@ -42,7 +42,7 @@ public class GameProcess {
     private void runGame() {
         boolean u1, u2 = true;
         while ((usr1.getCardInHandInfo().size() > 0 || ai1.getCardInHandInfo().size() > 0)
-                && deck.getSizeOfDeck() > 0) {
+                || deck.getSizeOfDeck() > 0) {
             table.clearTable();
             if (userstep) {
                 do {

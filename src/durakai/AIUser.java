@@ -25,11 +25,13 @@ public class AIUser extends User {
                 Card cd;
                 cd = hw.getMinCard(cardInHand);
                 toReturn.add(cd);
-                toReturn.addAll(hw.tossCard(cd, cardInHand));
+                cardInHand.remove(cd);
+//                toReturn.addAll(hw.tossCard(cd, cardInHand));
                 return toReturn;
             } else { //toss cards
                 toReturn.clear();
                 toReturn.addAll(hw.tossCard(table.returnAllCard(), cardInHand));
+                cardInHand.removeAll(toReturn);
                 return toReturn;
             }
         } else { //def

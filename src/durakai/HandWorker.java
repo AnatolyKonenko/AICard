@@ -6,6 +6,7 @@
 package durakai;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -71,7 +72,7 @@ public class HandWorker {
     
     public ArrayList<Card> tossCard(ArrayList<Card> cardOnTable, ArrayList<Card> cardInHand){
         ArrayList<Card> toReturn= new ArrayList<>();
-        Set<Integer> tc = null;
+        Set<Integer> tc = new HashSet<>();
         for (int i=0;i<cardOnTable.size();i++){
             tc.add(cardOnTable.get(i).getCardSize());
         }

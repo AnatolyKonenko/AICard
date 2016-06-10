@@ -24,7 +24,7 @@ public class GameProcess {
         usr1 = new User();
         ai1 = new AIUser();
         deck = new Deck();
-        userstep=true;
+        userstep = true;
         for (int i = 0; i < 6; i++) {
             usr1.getCard(deck.getCard());
             ai1.getCard(deck.getCard());
@@ -39,6 +39,8 @@ public class GameProcess {
             table.clearTable();
             if (userstep) {
                 do {
+                    System.out.println("\f");
+                    System.out.println("You attack");
                     u1 = U1Step();
                     u2 = AIStep();
                     printTable();
@@ -47,23 +49,26 @@ public class GameProcess {
                             ai1.getCard(table.returnAllCard());
                             table.clearTable();
                             userstep = false;
+                            break;
                         }
                     }
                 } while (!table.tableIsEmpty() && u1 && u2);
             } else {
                 do {
+                    System.out.println("You defend");
                     u1 = AIStep();
                     printTable();
                     u2 = U1Step();
                     printTable();
-                    if (!u1) {
+                    if (!u2) {
                         if (!table.returnUnbeatenCards().isEmpty()) {
                             usr1.getCard(table.returnAllCard());
                             table.clearTable();
                             userstep = true;
+                            break;
                         }
                     }
-                } while (!table.tableIsEmpty() && u2 &&u1);
+                } while (!table.tableIsEmpty() && u2 && u1);
             }
 
             if (userstep && usr1.getCountOfCard() < 6) {
@@ -75,7 +80,7 @@ public class GameProcess {
                 if (ai1.getCountOfCard() < 6) {
                     ai1.getCard(deck.getCard(6 - ai1.getCountOfCard()));
                 }
-                if (userstep && usr1.getCountOfCard() < 6) {
+                if (usr1.getCountOfCard() < 6) {
                     usr1.getCard(deck.getCard(6 - usr1.getCountOfCard()));
                 }
             }
@@ -91,17 +96,23 @@ public class GameProcess {
             if (u1c == null) {
                 return false;
             }
-            if (CheckCorrectAtt(u1c)) {
-                table.atacker.addAll(u1c);
+            while (!CheckCorrectAtt(u1c)) {
+                System.out.println("incorrect card!");
+                u1c = usr1.step(table);
             }
+            table.atacker.addAll(u1c);
+
         } else {
             u1c = usr1.step(table);
             if (u1c == null) {
                 return false;
             }
-            if (CheckCorrectDef(u1c)) {
-                table.defender.addAll(u1c);
+            while (!CheckCorrectAtt(u1c)) {
+                System.out.println("incorrect card!");
+                u1c = usr1.step(table);
             }
+            table.defender.addAll(u1c);
+
         }
 
         return true;
@@ -111,31 +122,44 @@ public class GameProcess {
         System.out.println("");
         System.out.println("Your Card is:");
         for (int i = 0; i < crd.size(); i++) {
-            System.out.print(i+")(");
+            System.out.print(i + ")(");
             switch (crd.get(i).getCardSize()) {
-                case 11: System.out.print("V"); break;
-                case 12: System.out.print("D"); break;
-                case 13: System.out.print("K"); break;
-                case 14: System.out.print("A"); break;
-                default : System.out.print(crd.get(i).getCardSize());    
+                case 11:
+                    System.out.print("V");
+                    break;
+                case 12:
+                    System.out.print("D");
+                    break;
+                case 13:
+                    System.out.print("K");
+                    break;
+                case 14:
+                    System.out.print("A");
+                    break;
+                default:
+                    System.out.print(crd.get(i).getCardSize());
             }
-            System.out.print(";" + crd.get(i).getCardType()+")");
+            System.out.print(";" + crd.get(i).getCardType() + ")");
             System.out.println("");
         }
         System.out.println("");
     }
 
     private boolean AIStep() {
-        ArrayList<Card> aiS=new ArrayList<Card>();
-        if (userstep){
+        ArrayList<Card> aiS = new ArrayList<Card>();
+        if (userstep) {
             ai1.setAtacker(!userstep);
-            aiS=ai1.makeStep(table);
-            if (aiS==null) return false;
+            aiS = ai1.makeStep(table);
+            if (aiS == null) {
+                return false;
+            }
             table.defender.addAll(aiS);
         } else {
             ai1.setAtacker(!userstep);
-            aiS=ai1.makeStep(table);
-            if (aiS==null) return false;
+            aiS = ai1.makeStep(table);
+            if (aiS == null) {
+                return false;
+            }
             table.atacker.addAll(aiS);
         }
         return true;
@@ -172,31 +196,44 @@ public class GameProcess {
         return correct;
     }
 
-    private void printTable(){
-        ArrayList<Card>cd =table.atacker;
-        for (Card crd:cd){
+    private void printTable() {
+        System.out.println("On table:");
+        ArrayList<Card> cd = table.atacker;
+        for (Card crd : cd) {
             printCardInfo(crd);
         }
         System.out.println("");
-        cd=table.defender;
-        for (Card crd:cd){
+        cd = table.defender;
+        for (Card crd : cd) {
             printCardInfo(crd);
         }
+        System.out.println("");
     }
-    
-    private void printCardInfo(Card crd){
+
+    private void printCardInfo(Card crd) {
         switch (crd.getCardSize()) {
-                case 11: System.out.print("V"); break;
-                case 12: System.out.print("D"); break;
-                case 13: System.out.print("K"); break;
-                case 14: System.out.print("A"); break;
-                default : System.out.print(crd.getCardSize());    
-            }
-            System.out.print(";" + crd.getCardType()+")");
+            case 11:
+                System.out.print("(V");
+                break;
+            case 12:
+                System.out.print("(D");
+                break;
+            case 13:
+                System.out.print("(K");
+                break;
+            case 14:
+                System.out.print("(A");
+                break;
+            default:
+                System.out.print("(" + crd.getCardSize());
+        }
+        System.out.print(";" + crd.getCardType() + ")");
     }
-    
+
     private boolean CheckCorrectAtt(Card crd) {
-        if (table.tableIsEmpty()) return true;
+        if (table.tableIsEmpty()) {
+            return true;
+        }
         return table.returnCardNumbers().contains(crd.getCardSize());
     }
 }

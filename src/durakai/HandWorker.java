@@ -29,31 +29,42 @@ public class HandWorker {
         return tmpHand;
     }
 
-    public Card getMinGreaterCard(ArrayList<Card> deck, Card card) {
+    public Card getMinGreaterCard(ArrayList<Card> deck, Card cardToBeat) {
         Card selectedCard;
         CardType ct = new CardType();
         selectedCard = new Card(15, "");
 
         for (Card cd : deck) {
-            if (selectedCard.getCardType().equals(ct.Kozir)) {
-                if ((cd.getCardType().equals(card.getCardType()) && cd.getCardSize() > card.getCardSize())
-                        || (!card.getCardType().equals(ct.Kozir)
-                        && cd.getCardType().equals(ct.Kozir) && cd.getCardSize() < selectedCard.getCardSize())||
-                        (card.getCardType().equals(ct.Kozir))&&
-                        (cd.getCardType().equals(ct.Kozir)&&cd.getCardSize()>card.getCardSize()&&
-                        cd.getCardSize()<=selectedCard.getCardSize())) {
+            if (cardToBeat.getCardType().equals(ct.Kozir)) {
+                if (cd.getCardType().equals(ct.Kozir) && cd.getCardSize() > cardToBeat.getCardSize()
+                        && cd.getCardSize() < selectedCard.getCardSize()) {
                     selectedCard = cd;
                 }
             } else if (selectedCard.getCardType().equals("")) {
-                if ((cd.getCardSize() >= card.getCardSize())
-                        && ((cd.getCardType().equals(ct.Kozir))
-                        || cd.getCardType().equals(card.getCardType()))) {
+                if (cd.getCardType().equals(ct.Kozir)) {
                     selectedCard = cd;
+                } else {
+                    if(cd.getCardType().equals(cardToBeat.getCardType())&&
+                            cd.getCardSize()>cardToBeat.getCardSize())
+                        selectedCard=cd;
                 }
-            } else if (cd.getCardSize() >= card.getCardSize()
-                    && cd.getCardType().equals(card.getCardType())
-                    && cd.getCardSize() < selectedCard.getCardSize()) {
-                selectedCard = cd;
+            } else {
+                if (selectedCard.getCardType().equals(ct.Kozir)) {
+                    if (cd.getCardType().equals(ct.Kozir) && cd.getCardSize() < selectedCard.getCardSize()) {
+                        selectedCard = cd;
+                    }
+                    if (cd.getCardType().equals(cardToBeat.getCardType()) && cd.getCardSize() >= cardToBeat.getCardSize()) {
+                        selectedCard = cd;
+                    }
+                }
+                if (!selectedCard.getCardType().equals(ct.Kozir)) {
+                    if (cd.getCardType().equals(cardToBeat.getCardType())
+                            && cd.getCardSize() >= cardToBeat.getCardSize()
+                            && cd.getCardSize() <= selectedCard.getCardSize()) {
+                        selectedCard = cd;
+                    }
+                }
+
             }
         }
         if (!selectedCard.getCardType().equals("")) {

@@ -41,17 +41,17 @@ public class GameProcess {
 
     private void runGame() {
         boolean u1, u2 = true;
-        while ((usr1.getCardInHandInfo().size() > 0 || ai1.getCardInHandInfo().size() > 0)
+        while ((usr1.getCardInHandInfo().size() > 0 && ai1.getCardInHandInfo().size() > 0)
                 || deck.getSizeOfDeck() > 0) {
             table.clearTable();
+            System.out.println("\n Table cleared \n");
             if (userstep) {
                 do {
-                    System.out.println("\f");
                     System.out.println("You attack");
                     u1 = U1Step();
                     u2 = AIStep();
                     printTable();
-                    if (!u2) {
+                    if (!u1&&!u2) {
                         if (!table.returnUnbeatenCards().isEmpty()) {
                             ai1.getCard(table.returnAllCard());
                             table.clearTable();
@@ -60,7 +60,7 @@ public class GameProcess {
                             break;
                         }
                     }
-                } while (!table.tableIsEmpty() && u1 && u2);
+                } while (!table.returnUnbeatenCards().isEmpty() || u1);
             } else {
                 do {
                     System.out.println("You defend");
@@ -70,6 +70,7 @@ public class GameProcess {
                     else {
                         u2=true;
                         System.out.println("Card beaten");
+                        break;
                     }
                     printTable();
                     if (!u2) {
@@ -81,7 +82,7 @@ public class GameProcess {
                             break;
                         }
                     }
-                } while (!table.tableIsEmpty() && u2 && u1);
+                } while (!table.returnUnbeatenCards().isEmpty()||u1);
             }
 
             if (userstep && usr1.getCountOfCard() < 6) {
@@ -97,9 +98,11 @@ public class GameProcess {
                     usr1.getCard(deck.getCard(6 - usr1.getCountOfCard()));
                 }
             }
+            System.out.println("In deck "+deck.getSizeOfDeck()+" card");
             userstep = !userstep;
         }
-        if (ai1.getCardInHandInfo().isEmpty()) System.out.println("AI wins this game");
+        if (ai1.getCardInHandInfo().isEmpty()&&usr1.getCardInHandInfo().isEmpty()) System.out.println("Withdraw");
+        else if (ai1.getCardInHandInfo().isEmpty()) System.out.println("AI wins this game");
         else System.out.println("User wins the game");
     }
 
@@ -173,7 +176,7 @@ public class GameProcess {
 
     private boolean AIStep() {
         ArrayList<Card> aiS = new ArrayList<>();
-        printCardInfo(ai1.getCardInHandInfo(), "AI card is");
+    //    printCardInfo(ai1.getCardInHandInfo(), "AI card is");
         if (userstep) {
             ai1.setAtacker(!userstep);
             aiS = ai1.makeStep(table);

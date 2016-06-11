@@ -104,7 +104,7 @@ public class GameProcess {
     }
 
     private boolean U1Step() {
-        printCardInfo(usr1.getCardInHandInfo());
+        printCardInfo(usr1.getCardInHandInfo(),"Your card is");
         ArrayList<Card> u1c;
         if (userstep) {
             u1c = usr1.step(table);
@@ -144,9 +144,9 @@ public class GameProcess {
         return true;
     }
 
-    private void printCardInfo(ArrayList<Card> crd) {
+    private void printCardInfo(ArrayList<Card> crd, String title) {
         System.out.println("");
-        System.out.println("Your Card is:");
+        System.out.println(title);
         for (int i = 0; i < crd.size(); i++) {
             System.out.print(i + ")(");
             switch (crd.get(i).getCardSize()) {
@@ -173,6 +173,7 @@ public class GameProcess {
 
     private boolean AIStep() {
         ArrayList<Card> aiS = new ArrayList<>();
+        printCardInfo(ai1.getCardInHandInfo(), "AI card is");
         if (userstep) {
             ai1.setAtacker(!userstep);
             aiS = ai1.makeStep(table);

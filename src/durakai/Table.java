@@ -7,7 +7,6 @@ package durakai;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -50,10 +49,10 @@ public class Table {
     public Set<Integer> returnCardNumbers(){
         Set<Integer> toReturn;
         toReturn = new HashSet<>();
-        for (int i=0;i<atacker.size();i++)
-            toReturn.add(atacker.get(i).getCardSize());
-        for (int i=0;i<defender.size();i++){
-            toReturn.add(defender.get(i).getCardSize());
+        for (Card card:atacker)
+            toReturn.add(card.getCardSize());
+        for (Card card:defender){
+            toReturn.add(card.getCardSize());
         }
         return toReturn;
     }

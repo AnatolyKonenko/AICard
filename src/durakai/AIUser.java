@@ -13,10 +13,6 @@ import java.util.ArrayList;
  */
 public class AIUser extends User {
 
-    public int makeBetterChoice() {
-        return 0;
-    }
-
     public ArrayList<Card> makeStep(Table table) {
         ArrayList<Card> toReturn = new ArrayList<>();
         HandWorker hw = new HandWorker();
@@ -26,7 +22,6 @@ public class AIUser extends User {
                 cd = hw.getMinCard(cardInHand);
                 toReturn.add(cd);
                 cardInHand.remove(cd);
-//                toReturn.addAll(hw.tossCard(cd, cardInHand));
                 return toReturn;
             } else { //toss cards
                 toReturn.clear();
@@ -36,24 +31,13 @@ public class AIUser extends User {
             }
         } else { //def
             toReturn = hw.getCardsToBeat(table.returnUnbeatenCards(), cardInHand);
-            if (toReturn!=null) {
+            if (toReturn != null) {
                 cardInHand.removeAll(toReturn);
                 return toReturn;
+            } else {
+                return null;
             }
-            else return null;
         }
 
-    }
-
-    public Card makeStep() {
-        HandWorker hw = new HandWorker();
-        Card cd;
-        if (isAtacker) {
-            cd = hw.getMinCard(cardInHand);
-            return cd;
-        } else {
-
-        }
-        return null;
     }
 }

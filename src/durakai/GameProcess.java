@@ -119,8 +119,8 @@ public class GameProcess {
             }
             while (!CheckCorrectAtt(u1c)) {
                 System.out.println("incorrect card!");
-                u1c = usr1.step(table);
                 usr1.getCard(u1c);
+                u1c = usr1.step(table);
                 if (u1c == null||u1c.isEmpty()) {
                     return false;
                 }
@@ -176,7 +176,6 @@ public class GameProcess {
 
     private boolean AIStep() {
         ArrayList<Card> aiS = new ArrayList<>();
-    //    printCardInfo(ai1.getCardInHandInfo(), "AI card is");
         if (userstep) {
             ai1.setAtacker(!userstep);
             aiS = ai1.makeStep(table);
@@ -193,10 +192,6 @@ public class GameProcess {
             table.atacker.addAll(aiS);
         }
         return true;
-    }
-
-    private boolean CheckCorrect() {
-        return false;
     }
 
     private boolean CheckCorrectDef(ArrayList<Card> crds) {

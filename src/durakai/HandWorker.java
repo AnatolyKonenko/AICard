@@ -15,20 +15,6 @@ import java.util.Set;
  */
 public class HandWorker {
 
-    public ArrayList<Card> getCardByType(ArrayList<Card> deck, Card card) {
-        ArrayList<Card> tmpHand = new ArrayList<>();
-        Card tmpCard;
-        CardType ct = new CardType();
-        for (int i = 0; i < deck.size(); i++) {
-            tmpCard = deck.get(i);
-            if (tmpCard.getCardType().equals(card.getCardType())
-                    || tmpCard.getCardType().equals(ct.Kozir)) {
-                tmpHand.add(tmpCard);
-            }
-        }
-        return tmpHand;
-    }
-
     public Card getMinGreaterCard(ArrayList<Card> deck, Card cardToBeat) {
         Card selectedCard;
         CardType ct = new CardType();
@@ -43,10 +29,9 @@ public class HandWorker {
             } else if (selectedCard.getCardType().equals("")) {
                 if (cd.getCardType().equals(ct.Kozir)) {
                     selectedCard = cd;
-                } else {
-                    if(cd.getCardType().equals(cardToBeat.getCardType())&&
-                            cd.getCardSize()>cardToBeat.getCardSize())
-                        selectedCard=cd;
+                } else if (cd.getCardType().equals(cardToBeat.getCardType())
+                        && cd.getCardSize() > cardToBeat.getCardSize()) {
+                    selectedCard = cd;
                 }
             } else {
                 if (selectedCard.getCardType().equals(ct.Kozir)) {
@@ -78,19 +63,23 @@ public class HandWorker {
     public Card getMinCard(ArrayList<Card> deck) {
         CardType ct = new CardType();
         Card selectedCard = deck.get(0);
-        for (int i = 0; i < deck.size(); i++) {
-            if ((!deck.get(i).getCardType().equals(ct.Kozir) && deck.get(i).getCardSize() <= selectedCard.getCardSize())
-                    || (selectedCard.getCardType().equals(ct.Kozir) && deck.get(i).getCardSize() < selectedCard.getCardSize())) {
-                selectedCard = deck.get(i);
+        for (Card cd : deck) {
+            if (selectedCard.getCardType().equals(ct.Kozir)) {
+                if (!cd.getCardType().equals(ct.Kozir)) {
+                    selectedCard = cd;
+                }
+            } else if (!cd.getCardType().equals(ct.Kozir) && cd.getCardSize() <= selectedCard.getCardSize()) {
+                selectedCard = cd;
             }
+
         }
         return selectedCard;
     }
 
     public ArrayList<Card> getCardsToBeat(ArrayList<Card> cardToBeat, ArrayList<Card> cardInHand) {
         ArrayList<Card> toReturn = new ArrayList<>();
-        for (int i = 0; i < cardToBeat.size(); i++) {
-            toReturn.add(getMinGreaterCard(cardInHand, cardToBeat.get(i)));
+        for (Card cd: cardToBeat) {
+            toReturn.add(getMinGreaterCard(cardInHand, cd));
         }
         if (toReturn.contains(null)) {
             return null;
@@ -101,9 +90,9 @@ public class HandWorker {
 
     public ArrayList<Card> tossCard(Card cd, ArrayList<Card> cardInHand) {
         ArrayList<Card> toReturn = new ArrayList<>();
-        for (int i = 0; i < cardInHand.size(); i++) {
-            if (cd.getCardSize() == cardInHand.get(i).getCardSize()) {
-                toReturn.add(cardInHand.get(i));
+        for (Card card:cardInHand) {
+            if (cd.getCardSize() == card.getCardSize()) {
+                toReturn.add(card);
             }
         }
         return toReturn;
@@ -112,12 +101,12 @@ public class HandWorker {
     public ArrayList<Card> tossCard(ArrayList<Card> cardOnTable, ArrayList<Card> cardInHand) {
         ArrayList<Card> toReturn = new ArrayList<>();
         Set<Integer> tc = new HashSet<>();
-        for (int i = 0; i < cardOnTable.size(); i++) {
-            tc.add(cardOnTable.get(i).getCardSize());
+        for (Card card:cardOnTable) {
+            tc.add(card.getCardSize());
         }
-        for (int i = 0; i < cardInHand.size(); i++) {
-            if (tc.contains(cardInHand.get(i).getCardSize())) {
-                toReturn.add(cardInHand.get(i));
+        for (Card card:cardInHand) {
+            if (tc.contains(card.getCardSize())) {
+                toReturn.add(card);
             }
         }
         return toReturn;

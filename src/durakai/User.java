@@ -14,21 +14,18 @@ import java.util.Scanner;
  */
 public class User {
     private String name;
-    protected boolean isAI;
     protected boolean isAtacker;
     protected ArrayList<Card> cardInHand;
 
 
     User(){
         name="Nm";
-        isAI=true;
         isAtacker=true;
         cardInHand=new ArrayList<>();
     }
 
-    public User(String name, boolean isAI) {
+    public User(String name) {
         this.name = name;
-        this.isAI = isAI;
         cardInHand=new ArrayList<>();
     }
     

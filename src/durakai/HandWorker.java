@@ -17,32 +17,31 @@ public class HandWorker {
 
     public Card getMinGreaterCard(ArrayList<Card> deck, Card cardToBeat) {
         Card selectedCard;
-        CardType ct = new CardType();
         selectedCard = new Card(15, "");
 
         for (Card cd : deck) {
-            if (cardToBeat.getCardType().equals(ct.Kozir)) {
-                if (cd.getCardType().equals(ct.Kozir) && cd.getCardSize() > cardToBeat.getCardSize()
+            if (cardToBeat.getCardType().equals(CardType.Trump)) {
+                if (cd.getCardType().equals(CardType.Trump) && cd.getCardSize() > cardToBeat.getCardSize()
                         && cd.getCardSize() < selectedCard.getCardSize()) {
                     selectedCard = cd;
                 }
             } else if (selectedCard.getCardType().equals("")) {
-                if (cd.getCardType().equals(ct.Kozir)) {
+                if (cd.getCardType().equals(CardType.Trump)) {
                     selectedCard = cd;
                 } else if (cd.getCardType().equals(cardToBeat.getCardType())
                         && cd.getCardSize() > cardToBeat.getCardSize()) {
                     selectedCard = cd;
                 }
             } else {
-                if (selectedCard.getCardType().equals(ct.Kozir)) {
-                    if (cd.getCardType().equals(ct.Kozir) && cd.getCardSize() < selectedCard.getCardSize()) {
+                if (selectedCard.getCardType().equals(CardType.Trump)) {
+                    if (cd.getCardType().equals(CardType.Trump) && cd.getCardSize() < selectedCard.getCardSize()) {
                         selectedCard = cd;
                     }
                     if (cd.getCardType().equals(cardToBeat.getCardType()) && cd.getCardSize() >= cardToBeat.getCardSize()) {
                         selectedCard = cd;
                     }
                 }
-                if (!selectedCard.getCardType().equals(ct.Kozir)) {
+                if (!selectedCard.getCardType().equals(CardType.Trump)) {
                     if (cd.getCardType().equals(cardToBeat.getCardType())
                             && cd.getCardSize() >= cardToBeat.getCardSize()
                             && cd.getCardSize() <= selectedCard.getCardSize()) {
@@ -61,14 +60,13 @@ public class HandWorker {
     }
 
     public Card getMinCard(ArrayList<Card> deck) {
-        CardType ct = new CardType();
         Card selectedCard = deck.get(0);
         for (Card cd : deck) {
-            if (selectedCard.getCardType().equals(ct.Kozir)) {
-                if (!cd.getCardType().equals(ct.Kozir)) {
+            if (selectedCard.getCardType().equals(CardType.Trump)) {
+                if (!cd.getCardType().equals(CardType.Trump)) {
                     selectedCard = cd;
                 }
-            } else if (!cd.getCardType().equals(ct.Kozir) && cd.getCardSize() <= selectedCard.getCardSize()) {
+            } else if (!cd.getCardType().equals(CardType.Trump) && cd.getCardSize() <= selectedCard.getCardSize()) {
                 selectedCard = cd;
             }
 

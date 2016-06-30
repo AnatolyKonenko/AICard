@@ -10,9 +10,9 @@ package durakai;
  * @author Linea
  */
 public class CardType { 
-    public String Pika="Pika";
-    public String Bubna="Bubna";
-    public String Cherva="Cherva";
-    public String Trefa="Trefa";
-    public String Kozir="Kozir";
+    public static final String Pika="Pika";
+    public static final String Bubna="Bubna";
+    public static final String Cherva="Cherva";
+    public static final String Trefa="Trefa";
+    public static final String Trump="Kozir";
  }

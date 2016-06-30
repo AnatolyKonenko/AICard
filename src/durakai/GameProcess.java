@@ -205,10 +205,9 @@ public class GameProcess {
     }
 
     private boolean CheckCorrectDef(Card crd) {
-        CardType ct = new CardType();
         Card unb = table.returnUnbeatenCards().get(0);
         return (unb.getCardSize() < crd.getCardSize() && unb.getCardType().equals(crd.getCardType()))
-                || (!unb.getCardType().equals(ct.Kozir) && crd.getCardType().equals(ct.Kozir));
+                || (!unb.getCardType().equals(CardType.Trump) && crd.getCardType().equals(CardType.Trump));
     }
 
     private boolean CheckCorrectAtt(ArrayList<Card> crds) {

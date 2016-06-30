@@ -22,21 +22,21 @@ public class Deck {
             generateDeck();
         }
         else {
-            CardType ct=new CardType();
+            
             createEmpty();
             int randomState = (int) (Math.random()*4);
             switch (randomState) {
                 case 0:
-                    generateDeckWithTrump(ct.Bubna);
+                    generateDeckWithTrump(CardType.Bubna);
                     break;
                 case 1:
-                    generateDeckWithTrump(ct.Cherva);
+                    generateDeckWithTrump(CardType.Cherva);
                     break;
                 case 2:
-                    generateDeckWithTrump(ct.Pika);
+                    generateDeckWithTrump(CardType.Pika);
                     break;
                 case 3:
-                    generateDeckWithTrump(ct.Trefa);
+                    generateDeckWithTrump(CardType.Trefa);
                     break;
             }
         }
@@ -45,12 +45,11 @@ public class Deck {
     private void createEmpty(){
         deck = new ArrayList<>();
         sortedDeck = new ArrayList<>();
-        CardType ct = new CardType();
         for (int i = 6; i <= 14; i++) {
-            sortedDeck.add(new Card(i, ct.Bubna));
-            sortedDeck.add(new Card(i, ct.Cherva));
-            sortedDeck.add(new Card(i, ct.Trefa));
-            sortedDeck.add(new Card(i, ct.Pika));
+            sortedDeck.add(new Card(i, CardType.Bubna));
+            sortedDeck.add(new Card(i, CardType.Cherva));
+            sortedDeck.add(new Card(i, CardType.Trefa));
+            sortedDeck.add(new Card(i, CardType.Pika));
         }
         
     }
@@ -66,12 +65,11 @@ public class Deck {
 
     private void generateDeckWithTrump(String toReplace) {
         Card crd;
-        CardType ct = new CardType();
         int numberOfCard = (int) (Math.random() * sortedDeck.size());
         while (sortedDeck.size() > 0) {
             crd = sortedDeck.get(numberOfCard);
             if (crd.getCardType().equals(toReplace)) {
-                deck.add(new Card(crd.getCardSize(), ct.Kozir));
+                deck.add(new Card(crd.getCardSize(),CardType.Trump));
             } else deck.add(crd);
             sortedDeck.remove(numberOfCard);
             numberOfCard = (int) (Math.random() * sortedDeck.size());
